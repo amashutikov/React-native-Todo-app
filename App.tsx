@@ -2,7 +2,14 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { AddTodo } from './components/addTodo';
 import { Todo } from './types/Todo';
-import { addTodo, getTodos, removeTodo, toggleTodo } from './api/todos';
+import {
+  addTodo,
+  getTodos,
+  removeCompleted,
+  removeTodo,
+  toggleAll,
+  toggleTodo,
+} from './api/todos';
 import { Header } from './components/header';
 import { filterTodos } from './helpers/filterTodos';
 import { TodoFilter } from './types/Filters';
@@ -84,9 +91,30 @@ export default function App() {
   }, []);
 
   const handleClearCompleted = useCallback(() => {
-    const completedTodos = todos.filter((todo) => todo.completed);
+    const completedTodoIds = todos
+      .filter((todo) => todo.completed)
+      .map((todo) => todo.id);
 
-    completedTodos.forEach((todo) => deleteTodo(todo.id));
+    setActiveTodoIds((prev) => [...prev, ...completedTodoIds]);
+
+    removeCompleted(completedTodoIds)
+      .then((response) => {
+        const isDeleted = Boolean(response);
+
+        if (isDeleted) {
+          setTodos((prevTodos) =>
+            prevTodos.filter((todo) => !completedTodoIds.includes(todo.id)),
+          );
+
+          setActiveTodoIds([]);
+        }
+
+        return isDeleted;
+      })
+      .catch(() => {
+        console.error('Unable to delete todos');
+        setActiveTodoIds([]);
+      });
   }, [todos]);
 
   const toggleCompletedStatus = useCallback(
@@ -116,18 +144,46 @@ export default function App() {
   );
 
   const handleToggleAllStatuses = useCallback(() => {
+    const todoIds = todos.map((todo) => todo.id);
+
     if (isAllTodosCompleted) {
-      todos.forEach((todo) => {
-        toggleCompletedStatus(todo);
-      });
+      setActiveTodoIds((prev) => [...prev, ...todoIds]);
+
+      toggleAll(todos)
+        .then((response) => {
+          setTodos(response);
+          setActiveTodoIds([]);
+        })
+        .catch(() => {
+          console.error('Unable to toggle todos');
+          setActiveTodoIds([]);
+        });
 
       return;
     }
 
-    todos
-      .filter((todo) => !todo.completed)
-      .forEach((todo) => {
-        toggleCompletedStatus(todo);
+    const uncompletedTodos = todos.filter((todo) => !todo.completed);
+
+    setActiveTodoIds((prev) => [...prev, ...todoIds]);
+
+    toggleAll(uncompletedTodos)
+      .then((response) => {
+        const toggledIds = response.map((todo) => todo.id);
+
+        setTodos((prevTodos) =>
+          prevTodos.map((todo) => {
+            if (toggledIds.includes(todo.id)) {
+              return { ...todo, completed: true };
+            }
+
+            return todo;
+          }),
+        );
+        setActiveTodoIds([]);
+      })
+      .catch(() => {
+        console.error('Unable to toggle todos');
+        setActiveTodoIds([]);
       });
   }, [todos]);
 
