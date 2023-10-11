@@ -2,6 +2,9 @@
 
 ![Todo App]
 
+https://github.com/amashutikov/React-native-Todo-app/assets/129765597/3a9bd09d-51a1-4510-8f87-5d7dd1550b64
+
+
 A simple and elegant application for managing your task list. Add, edit, and delete tasks to ensure a more organized workflow.
 
 ## Features
