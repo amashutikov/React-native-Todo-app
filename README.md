@@ -1,6 +1,7 @@
 # Todo App
 
-![Todo App]
+https://github.com/amashutikov/React-native-Todo-app/assets/129765597/3a9bd09d-51a1-4510-8f87-5d7dd1550b64
+
 
 A simple and elegant application for managing your task list. Add, edit, and delete tasks to ensure a more organized workflow.
 
@@ -23,6 +24,8 @@ A simple and elegant application for managing your task list. Add, edit, and del
 2. Open the Expo Go app on your device.
 3. Run the app: `npm start`
 4. Scan the QR code displayed in your console using the Expo Go app. This will load and run the React Native app on your mobile device.
+
+5. Also you can download APK file and install it on your device [link](https://bit.ly/48RvLmr).
 
 ## API Integration
 
