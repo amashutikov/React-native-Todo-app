@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ridermessi.template"
+      "bundleIdentifier": "com.todoApp"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ridermessi.template"
+      "package": "com.todoApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
