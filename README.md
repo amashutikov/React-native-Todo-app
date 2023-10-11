@@ -25,7 +25,7 @@ A simple and elegant application for managing your task list. Add, edit, and del
 3. Run the app: `npm start`
 4. Scan the QR code displayed in your console using the Expo Go app. This will load and run the React Native app on your mobile device.
 
-5. Also you can download APK file and install it on your device [download link] https://bit.ly/48RvLmr
+5. Also you can download APK file and install it on your device [download link](https://bit.ly/48RvLmr)
 
 ## API Integration
 
